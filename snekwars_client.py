@@ -186,12 +186,12 @@ class event(object):
 
         return resp.json()
 
-    def _adminResetPassword(self, display_name, new_password):
+    def _adminResetPassword(self, emailaddress, new_password):
         """This changes a given users password. Provide the display name and new password."""
         if not self.loggedin:
             return "Please login first."
         url = self.event_url + "/admin/resetpassword"
-        resp = self._post_json(url, {'display_name':display_name,"new_password":new_password})
+        resp = self._post_json(url, {'emailaddress':emailaddress,"new_password":new_password})
         return resp.get("data")
 
     def _adminSetRegistrationCode(self, new_reg_code):
