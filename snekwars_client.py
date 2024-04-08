@@ -111,14 +111,15 @@ class event(object):
         for text in qtxt_split:
             qtxt_final += text + '\n'
 
-        tableHeader = ['#', 'Challenge Name', 'Challenge', 'Points']
+        tableHeader = ['#', 'Challenge Name', 'Challenge', 'Points', 'Timeout']
         qTable = []
 
         qTable.append([
                 "{}".format(challenge_num),
                 "{}".format(self.challenge_index[str(challenge_num)]),
                 "{}".format(qtxt_final or "NONE"),
-                "{}".format(resp.get("points"))])
+                "{}".format(resp.get("points")),
+                "{}".format(resp.get("timeout"))])
         qTable.insert(0, tableHeader)
         try:
             print(tabulate(qTable, headers='firstrow', tablefmt='fancy_grid'))
