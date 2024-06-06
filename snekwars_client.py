@@ -102,7 +102,7 @@ class event(object):
             return None
 
         # Get terminal width and adjust table to fill it. 
-        rows, columns = os.popen('stty size', 'r').read().split()
+        columns = os.get_terminal_size().columns
         qtxt_width = int(columns) - 52
         if qtxt_width < 0:
             qtxt_width = 80
