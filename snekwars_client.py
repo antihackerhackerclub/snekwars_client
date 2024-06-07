@@ -263,6 +263,14 @@ class event(object):
         resp = self._post_json(url, {'new_rate_limit':str(new_rate_limit)})
         return resp.get("data")
 
+    def _adminToggleScoreboard(self):
+        """This will toggle the scoreboard from disabled to active and vice versa."""
+        if not self.loggedin:
+            return "Please login first."
+        url = self.event_url + "/admin/togglescoreboard"
+        resp = self.client_session.get(url).json()
+        return resp.get("data")        
+
 def _time_elapsed(timestr):
     as_dt = datetime.datetime.strptime(timestr, "%a, %d %b %Y %H:%M:%S")
     return (datetime.datetime.now() - as_dt).total_seconds()
@@ -290,4 +298,3 @@ def _collapse_points(completed_challenges):
         else:
             answer += eachval+","
     return answer[:-1]
-
