@@ -2,7 +2,7 @@
 # SnekWars Client
 # @0xAHHC
 ###############################################################################
-import requests, json, codecs, datetime, os, ast
+import requests, json, codecs, pickle, datetime, os, ast
 from tabulate import tabulate
 
 class event(object):
@@ -134,7 +134,12 @@ class event(object):
 
         url = self.event_url + "/data/" + str(challenge_num)
         try:
-            data = self.client_session.get(url).json()['data']
+            data = ''
+            try:
+                encoded_data = self.client_session.get(url).json().get('data').encode()
+                data = pickle.loads(codecs.decode(encoded_data, "base64"))
+            except:
+                data = self.client_session.get(url).json()['data']
             return data
         except Exception as e:
             print('Unable to query data')
@@ -144,9 +149,9 @@ class event(object):
         """Submit an solution."""
         if not self.loggedin:
             return "Please login first"
-        # chal no 1337 debug solution = 'blinkys_are_life'
+        # chal no 1337 debug solution = 'this_is_a_test_pls_remove_for_production'
         url = self.event_url + "/solve/"
-        resp = self._post_json(url, {'solution':str(solution).strip()})
+        resp = self._post_json(url, {'solution':solution})
         return resp.get("data")
 
     def change_password(self, current_password, new_password):
